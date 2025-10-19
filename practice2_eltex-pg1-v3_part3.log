@@ -1,0 +1,230 @@
+git config --global user.name "OlegDiablo"
+git config --global user.email "afanev_maks00@mail.ru"
+git config --global init.defaultBranch main
+apt update
+Hit:1 http://ru.archive.ubuntu.com/ubuntu noble InRelease
+Get:2 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1,498 kB]
+Get:6 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+Get:8 http://ru.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+Get:9 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1,496 kB]
+Get:10 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+Get:11 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [52.2 kB]
+Get:12 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [212 B]
+Get:13 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [378 kB]
+Get:14 http://ru.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:15 http://ru.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7,140 B]
+Get:16 http://ru.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+Get:17 http://ru.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [11.0 kB]
+Get:18 http://ru.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+Fetched 4,019 kB in 1s (3,475 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+83 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+apt install git gh
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+git set to manually installed.
+The following NEW packages will be installed:
+  gh
+0 upgraded, 1 newly installed, 0 to remove and 83 not upgraded.
+Need to get 8,836 kB of archives.
+After this operation, 45.4 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe amd64 gh amd64 2.45.0-1ubuntu0.3 [8,836 kB]
+Fetched 8,836 kB in 1s (8,562 kB/s)
+Selecting previously unselected package gh.
+(Reading database ... 124961 files and directories currently installed.)
+Preparing to unpack .../gh_2.45.0-1ubuntu0.3_amd64.deb ...
+Unpacking gh (2.45.0-1ubuntu0.3) ...
+Setting up gh (2.45.0-1ubuntu0.3) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+Scanning processes...
+Scanning candidates...
+Scanning linux images...
+
+Pending kernel upgrade!
+Running kernel version:
+  6.8.0-55-generic
+Diagnostics:
+  The cssurrently running kernel version is not the expected kernel version 6.8.0-85-generic.
+
+Restarting the system to load the new kernel will not be handled automatically, so you should consider rebooting.
+
+Restarting services...
+
+Service restarts being deferred:
+ /etc/needrestart/restart.d/dbus.service
+ systemctl restart getty@tty1.service
+ systemctl restart systemd-logind.service
+ systemctl restart unattended-upgrades.service
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+
+ssh-keygen -t ed25519 -f ~/.ssh/OlegDiablo
+Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /root/.ssh/OlegDiablo
+Your public key has been saved in /root/.ssh/OlegDiablo.pub
+The key fingerprint is:
+SHA256:KridBNOOnFguTaR2cVa4Un4ZQ58JYvdQvgVTyJd5rdE root@eltex-practice2-pg1-v3
+The key's randomart image is:
++--[ED25519 256]--+
+|     oo*o+o.o o  |
+|    .o+o*o=+ o E |
+|  ..oo. +*... o  |
+| o o+o o  o  .   |
+|..=.o . S.       |
+|.B.B   .         |
+|o B + .          |
+| . + o           |
+|  . o            |
++----[SHA256]-----+
+
+gh auth login
+? What account do you want to log into? GitHub.com
+? What is your preferred protocol for Git operations on this host? SSH
+? Upload your SSH public key to your GitHub account? /root/.ssh/OlegDiablo.pub
+? Title for your SSH key: eltex-practice2-pg1-v3
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: 9288-022F
+Press Enter to open github.com in your browser...
+✓ Authentication complete.
+- gh config set -h github.com git_protocol ssh
+✓ Configured git protocol
+! Authentication credentials saved in plain text
+✓ Uploaded the SSH key to your GitHub account: /root/.ssh/OlegDiablo.pub
+✓ Logged in as OlegDiablo
+
+gh auth setup-git --hostname github.com
+gh auth status
+github.com
+  ✓ Logged in to github.com account OlegDiablo (/root/.config/gh/hosts.yml)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: gho_************************************
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo'
+
+gh repo create --public eltex-practice-Afanasev
+✓ Created repository OlegDiablo/eltex-practice-Afanasev on GitHub
+  https://github.com/OlegDiablo/eltex-practice-Afanasev
+
+mkdir ~/eltex-practice-Afanasev && cd ~/eltex-practice-Afanasev
+eltex-practice-Afanasev# echo "# Репозиторий для практик курса 'Системное программирование в Linux'" >> README.md
+eltex-practice-Afanasev# git init
+Initialized empty Git repository in /root/eltex-practice-Afanasev/.git/
+
+eltex-practice-Afanasev# git add README.md
+eltex-practice-Afanasev# git commit -m "first commit"
+[main (root-commit) 5a7a374] first commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+
+eltex-practice-Afanasev# git branch -M main
+eltex-practice-Afanasev# git remote add origin https://github.com/OlegDiablo/eltex-practice-Afanasev.git
+eltex-practice-Afanasev# git status
+On branch main
+nothing to commit, working tree clean
+
+eltex-practice-Afanasev# git push -u origin main
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 314 bytes | 314.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/OlegDiablo/eltex-practice-Afanasev.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
+eltex-practice-Afanasev#mkdir -p module1/task1
+eltex-practice-Afanasev# mkdir module1/task2
+eltex-practice-Afanasev# mkdir module1/task3
+
+scp eltex-pg1-v3_part.log eltex-pg1-v3_part3.log eltex-pg1-v3_part3_gt50M.log practice2_eltex-pg1-v3_part1.log report_part1.txt root@172.16.9.177:/root/
+Enter passphrase for key '/home/eltex-pg1-v3/.ssh/id_rsa':
+eltex-pg1-v3_part.log                                                                                                      100%  290    10.2KB/s   00:00
+eltex-pg1-v3_part3.log                                                                                                     100%  340     5.8KB/s   00:00
+eltex-pg1-v3_part3_gt50M.log                                                                                               100%  615    42.0KB/s   00:00
+practice2_eltex-pg1-v3_part1.log                                                                                           100%  595    26.5KB/s   00:00
+report_part1.txt                                                                                                           100%  133     5.1KB/s   00:00
+
+cp practice1_eltex-pg1-v3_part2.log practice1_eltex-pg1-v3_part3_gt50M.log practice1_eltex-pg1-v3_part3.log report_part1.txt ~/eltex-practice-Afanasev/module1/task1/
+root@eltex-practice2-pg1-v3:~# cp practice2_eltex-pg1-v3_part1.log practice2_eltex-pg1-v3_part2.log ~/eltex-practice-Afanasev/module1/task2/
+eltex-practice-Afanasev#git add .
+eltex-practice-Afanasev# git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   module1/task1/practice1_eltex-pg1-v3_part2.log
+        new file:   module1/task1/practice1_eltex-pg1-v3_part3.log
+        new file:   module1/task1/practice1_eltex-pg1-v3_part3_gt50M.log
+        new file:   module1/task1/report_part1.txt
+        new file:   module1/task2/practice2_eltex-pg1-v3_part1.log
+        new file:   module1/task2/practice2_eltex-pg1-v3_part2.log
+
+eltex-practice-Afanasev# git commit -m "second commit"
+[main 4390362] second commit
+ 6 files changed, 2372 insertions(+)
+ create mode 100644 module1/task1/practice1_eltex-pg1-v3_part2.log
+ create mode 100644 module1/task1/practice1_eltex-pg1-v3_part3.log
+ create mode 100644 module1/task1/practice1_eltex-pg1-v3_part3_gt50M.log
+ create mode 100644 module1/task1/report_part1.txt
+ create mode 100644 module1/task2/practice2_eltex-pg1-v3_part1.log
+ create mode 100644 module1/task2/practice2_eltex-pg1-v3_part2.log
+
+eltex-practice-Afanasev# git push
+Enumerating objects: 12, done.
+Counting objects: 100% (12/12), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (11/11), done.
+Writing objects: 100% (11/11), 27.21 KiB | 9.07 MiB/s, done.
+Total 11 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/OlegDiablo/eltex-practice-Afanasev.git
+   5a7a374..4390362  main -> main
+
+mkdir ~/eltex-practice-Afanasev_clone && cd ~/eltex-practice-Afanasev_clone
+eltex-practice-Afanasev_clone# git clone https://github.com/OlegDiablo/eltex-practice-Afanasev.git
+
+cd ~/eltex-practice-Afanasev
+eltex-practice-Afanasev# git fetch
+eltex-practice-Afanasev# git log origin/main
+commit 43903628d481047e4e933e2a5aeceb42ca36e3c1 (HEAD -> main, origin/main)
+Author: OlegDiablo <afanev_maks00@mail.ru>
+Date:   Sun Oct 19 12:58:54 2025 +0000
+
+    second commit
+
+commit 5a7a374599e7e747c196482321ab641fbb55fcc6
+Author: OlegDiablo <afanev_maks00@mail.ru>
+Date:   Sun Oct 19 12:37:18 2025 +0000
+
+    first commit
+eltex-practice-Afanasev# git diff main origin/main
+eltex-practice-Afanasev# git merge
+Already up to date.
+
+eltex-practice-Afanasev# git add .
+eltex-practice-Afanasev# git commit -m "third commit"
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+eltex-practice-Afanasev# git push
+Everything up-to-date
