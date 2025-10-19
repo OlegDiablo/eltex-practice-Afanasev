@@ -1,0 +1,11 @@
+mkdir -p D1/D2/D3
+touch D1/D2/file.txt
+ln -s /home/eltex-pg1-v3/D1/D2/file.txt symbolic
+ln /home/eltex-pg1-v3/D1/D2/file.txt hard
+mv D1/D2/file.txt D1/
+rm -rf D1/D2/
+find / -type f -size +20M -exec du -h {} \; 2>/dev/null > eltex-pg1-v3_part3_gt50M.log
+find ~/ -type f -mtime -1 2>/dev/null
+which find
+file /usr/bin/find
+file /boot/initrd*

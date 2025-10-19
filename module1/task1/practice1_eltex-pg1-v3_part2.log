@@ -1,0 +1,13 @@
+screen -S eltex-pg1-v3_part2
+compgen -v HIST
+echo $HISTSIZE
+echo .*
+export HISTTIMEFORMAT="%d%m%y %T "
+date
+tail -3 .bash_history
+export PROMPT_COMMAND='history -a'
+DATE=$(date "+5d.%m.%Y")
+TIME=$(date "+%H:%M:%S")
+DATE_TIME="$DATE $TIME"
+export PS1='\u@\h:\w$ '
+mkdir $(date +%Y)-{01..12}
