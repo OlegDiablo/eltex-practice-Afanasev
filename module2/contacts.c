@@ -56,6 +56,38 @@ char* scanInput() {
 }
 
 
+void printString(char* data) {
+
+    for (int i = 0; data[i] != '*'; i++) {
+
+        printf("%c", data[i]);
+    
+    }
+    printf(" ");
+}
+
+
+void printContact(Contact *contact){
+
+    char* name = contact->name;
+    printString(name);
+
+    char* surname = contact->surname;
+    printString(surname);
+
+    char* patronymic = contact->patronymic;
+    printString(patronymic);
+
+    char* phone_number = contact->phone_number;
+    printString(phone_number);
+
+    char* position = contact->position;
+    printString(position);
+    printf("\n");
+
+}
+
+
 void addParameters() {
 
     

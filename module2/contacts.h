@@ -1,6 +1,3 @@
-#ifndef contacts_h
-#define contacts_h 
-
 typedef struct {
 
     unsigned int id;
@@ -18,5 +15,4 @@ void insertPatronymic(Contact*, char*);
 void insertPhoneNumber(Contact*, char*);
 void insertPosition(Contact*, char*);
 char* scanInput();
-
-#endif
+void printContact(Contact*);
