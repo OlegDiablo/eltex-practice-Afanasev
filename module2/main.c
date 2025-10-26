@@ -7,9 +7,22 @@ int main() {
     Contact *contact = malloc(sizeof(Contact)); 
     
     char command;
+
     while (1) {
-        printf("Press:\n1 to add conatct\n2 to change contact\n3 to delete contact\n0 to exit from program\n");
+
+        printf("Press:\n1 to add contact\n2 to change contact\n3 to delete contact\n0 to exit from program\n");
         scanf("%c", &command);
+        char test;
+        
+
+        if (scanf("%c", &test) != 1 || test != '\n') {
+
+            printf("Incorrect input\n");
+            while(test != '\n') {scanf("%c", &test);}
+            continue;
+
+        }
+
         switch (command) {
             case '1':
 
