@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+int error = 0;
+
 int mul(int n, ...) {
 
     int result = 1;
@@ -28,17 +30,17 @@ int div(int n, ...) {
 
     result = arr[0];
 
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 1; i < n; i++) {
         
-        if (arr[i] > arr[i+1] || arr[i+1] == 0) {
+        if (result > arr[i] && arr[i] != 0) {
 
-            result /= arr[i+1];
+            result /= arr[i];
 
         } 
         else {
 
-            printf("Incorrect input");
-            return 89765;
+            error = 1;
+            return result;
 
         }
 
@@ -88,39 +90,56 @@ int main(){
 
     char operation = ' ', test = ' ';
     while (1) {
-        int flag = 0;
         
         printf("Insert an operation: ");
-        scanf("%c", operation);
-        if (scanf("%c", test) != 1) {
-            while (scanf("%c", test) != 1 || test == '\n') {
-                scanf("%c", test);
-            }
-            flag = 1;
-        }  
-        if (flag == 1) {
+        scanf("%c", &operation);
+        scanf("%c", &test);
+        if ( test != '\n') {
+
+            while ((test = getchar()) != '\n' && test != EOF);
             printf("Incorrect input\n");
             continue;
-        }
+        }  
 
         switch (operation) {
 
             case '+': 
 
-                continue;
+                printf("Result is %d\n", add(3, 200, 100, 50, 60, 40));
+                printf("Result is %d\n", add(4, 200, 100, 50, 60, 40));
+                printf("Result is %d\n", add(5, 200, 100, 50, 60, 40));
+                break;
 
             case '-':
 
-                printf("Result is %d", sub(4, 200, 100, 50, 60, 40));
+                printf("Result is %d\n", sub(3, 200, 100, 50, 60, 40));
+                printf("Result is %d\n", sub(4, 200, 100, 50, 60, 40));
+                printf("Result is %d\n", sub(5, 200, 100, 50, 60, 40));
                 break;
 
             case '*':
 
-                continue;
+                printf("Result is %d\n", mul(3, 2, 10, 5, 6, 4));
+                printf("Result is %d\n", mul(4, 2, 10, 5, 6, 4));
+                printf("Result is %d\n", mul(5, 2, 10, 5, 6, 4));
+                break;
 
             case '/':
 
-                continue;
+                int res = div(4, 200, 0, 40, 50);
+                if (error == 1) {
+                    
+                    printf("Incorrect input\n");
+                    error = 0;
+
+                } 
+                else {
+
+                    printf("Result is %d\n", res);
+                    error = 0;
+                    
+                }
+                break;
 
             case '=':
             
@@ -128,7 +147,7 @@ int main(){
 
             default:
 
-            printf("Incorrect input");
+            printf("Incorrect input\n");
             continue;
 
         }
