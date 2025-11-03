@@ -19,6 +19,23 @@ void printMask(mode_t mask){
 
 }
 
+void printBitMask(mode_t mask){
+
+    printf((mask & S_IRUSR) ? "1" : "0");
+    printf((mask & S_IWUSR) ? "1" : "0");
+    printf((mask & S_IXUSR) ? "1" : "0");
+    printf("-");
+    printf((mask & S_IRGRP) ? "1" : "0");
+    printf((mask & S_IWGRP) ? "1" : "0");
+    printf((mask & S_IXGRP) ? "1" : "0");
+    printf("-");
+    printf((mask & S_IROTH) ? "1" : "0");
+    printf((mask & S_IWOTH) ? "1" : "0");
+    printf((mask & S_IXOTH) ? "1" : "0");
+    printf("\n");
+
+}
+
 
 mode_t checkFile(char* filename){
  
@@ -220,8 +237,10 @@ int main(){
 
         mode_t mask = makeMask(owner, mode);
         mode_t new_mask = operProc(oper, mask, file_mask);
-        printf("New mask: ");
+        printf("New mask: %03o\n", new_mask);
         printMask(new_mask);
+        printBitMask(new_mask);
+        
     }
 
     return 0;
