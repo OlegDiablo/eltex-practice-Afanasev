@@ -105,31 +105,31 @@ int main(){
 
             case '+': 
 
-                printf("Result is %d\n", add(3, 200, 100, 50, 60, 40));
-                printf("Result is %d\n", add(4, 200, 100, 50, 60, 40));
-                printf("Result is %d\n", add(5, 200, 100, 50, 60, 40));
+                printf("200+100+50=%d\n", add(3, 200, 100, 50, 60, 40));
+                printf("200+100+50+60=%d\n", add(4, 200, 100, 50, 60, 40));
+                printf("200+100+50+60+40=%d\n", add(5, 200, 100, 50, 60, 40));
                 break;
 
             case '-':
 
-                printf("Result is %d\n", sub(3, 200, 100, 50, 60, 40));
-                printf("Result is %d\n", sub(4, 200, 100, 50, 60, 40));
-                printf("Result is %d\n", sub(5, 200, 100, 50, 60, 40));
+                printf("200-100-50=%d\n", sub(3, 200, 100, 50, 60, 40));
+                printf("200-100-50-60=%d\n", sub(4, 200, 100, 50, 60, 40));
+                printf("200-100-50-60-40=%d\n", sub(5, 200, 100, 50, 60, 40));
                 break;
 
             case '*':
 
-                printf("Result is %d\n", mul(3, 2, 10, 5, 6, 4));
-                printf("Result is %d\n", mul(4, 2, 10, 5, 6, 4));
-                printf("Result is %d\n", mul(5, 2, 10, 5, 6, 4));
+                printf("2*10*5=%d\n", mul(3, 2, 10, 5, 6, 4));
+                printf("2*10*5*6=%d\n", mul(4, 2, 10, 5, 6, 4));
+                printf("2*10*5*6*4=%d\n", mul(5, 2, 10, 5, 6, 4));
                 break;
 
             case '/':
 
-                int res = div(4, 200, 0, 40, 50);
+                int res = div(4, 200, 2, 4, 5);
                 if (error == 1) {
                     
-                    printf("Incorrect input\n");
+                    printf("Incorrect values\n");
                     error = 0;
 
                 } 

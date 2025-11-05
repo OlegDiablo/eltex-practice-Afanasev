@@ -62,7 +62,7 @@ int isValidInput(const char *input, int counter) {
 }
 
 
-float charToInt(char* data){
+float charToFloat(char* data){
 
     int result = atoi(data);
 
@@ -108,6 +108,8 @@ char* prioritiesDist(const char* operators, int oper_size){
 
 int inputParsing(char* input, int counter, char* operators, float* values){
 
+    printf("pointer in inputParsing before parsing is %p\n", values);
+
     int arr_size = 0, values_size = 0, oper_size = 0;; 
     char* num = calloc(1, sizeof(char));
 
@@ -123,13 +125,13 @@ int inputParsing(char* input, int counter, char* operators, float* values){
         }
         else{
 
-            float res = charToInt(num);
+            float res = charToFloat(num);
             free(num);
             num = calloc(1, sizeof(char));
 
             values_size++;
             arr_size = 0;
-            values = realloc(values, sizeof(float)*values_size);
+            values = realloc(values, sizeof(float) * (values_size));
             values[values_size-1] = res;
 
             oper_size++;
@@ -140,9 +142,8 @@ int inputParsing(char* input, int counter, char* operators, float* values){
 
     }
 
-    float res = charToInt(num);
-    printf("values_size=%d\n", values_size);
-    values = realloc(values, sizeof(float)*(values_size+2));
+    float res = charToFloat(num);
+    printf("pointer in inputParsing is %p\n", values);
     values[values_size] = res;
 
     for(int i = 0; i < oper_size + 1; i++){
@@ -160,7 +161,8 @@ int inputParsing(char* input, int counter, char* operators, float* values){
     }
 
     printf("\n");
-    printf("pointer in inputParsing is %p\n", values);
+    printf("pointer in inputParsing is %p\n", &values[0]);
+    free(num);
 
     return oper_size;
 
@@ -298,7 +300,7 @@ int main(){
         } 
 
         else {
-
+            printf("pointer in main brfore parsing is %p\n", values);
             oper_size = inputParsing(expression, counter, operators, values);
             printf("pointer in main is %p\n", values);
             for(int i = 0; i < 6; i++){
