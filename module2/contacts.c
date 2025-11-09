@@ -1,6 +1,7 @@
 #include "contacts.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 void insertName(Contact* contact, char* value) {
 
@@ -23,9 +24,12 @@ void insertPatronymic(Contact* contact, char* value) {
 }
 
 
-void insertPhoneNumber(Contact* contact, char* value) {
+void insertPhoneNumber(Contact* contact, char* value, int counter) {
 
-    contact->phone_number = value;
+    char** new_phones = realloc(contact->phone_number, sizeof(char*)*(counter+1));
+    contact->phone_number = new_phones;
+    contact->phone_number[counter] = malloc(strlen(value) + 1);
+    strcpy(contact->phone_number[counter], value);
 
 }
 
@@ -33,25 +37,6 @@ void insertPhoneNumber(Contact* contact, char* value) {
 void insertPosition(Contact* contact, char* value) {
 
     contact->position = value;
-
-}
-
-
-char* scanInput() {
-    
-    char *value = calloc(1, sizeof(char));
-    int n = 1;
-    char input = ' ';
-    while (scanf("%c", &input) == 1 && input != '\n') {
-
-        value[n-1] = input;
-        n++;
-        value = realloc(value, sizeof(char) * n);
-
-    }
-    value[n] = '*';
-
-    return value;
 
 }
 
@@ -67,22 +52,36 @@ void printString(char* data) {
 }
 
 
-void printContact(Contact *contact){
+char* scanInput() {
+    
+    char *value = calloc(1, sizeof(char));
+    int n = 1;
+    char input = ' ';
+    while (scanf("%c", &input) == 1 && input != '\n') {
 
-    char* name = contact->name;
-    printString(name);
+        value[n-1] = input;
+        n++;
+        value = realloc(value, sizeof(char) * n);
 
-    char* surname = contact->surname;
-    printString(surname);
+    }
+    value[n] = '\0';
 
-    char* patronymic = contact->patronymic;
-    printString(patronymic);
+    return value;
 
-    char* phone_number = contact->phone_number;
-    printString(phone_number);
+}
 
-    char* position = contact->position;
-    printString(position);
+
+void printContact(Contact* contact){
+
+    printString(contact->name);
+
+    printString(contact->surname);
+
+    printString(contact->patronymic);
+
+    printString(contact->phone_number);
+
+    printString(contact->position);
     printf("\n");
 
 }

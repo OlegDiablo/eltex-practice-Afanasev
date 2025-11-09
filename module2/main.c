@@ -1,10 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 #include "contacts.h"
+#include "DL_List.h"
 
 int main() {
 
-    Contact *contact = malloc(sizeof(Contact)); 
+    Contact contact[40]; 
     
     char command;
 
@@ -38,9 +40,32 @@ int main() {
                 char* patronymic = scanInput();
                 insertPatronymic(contact, patronymic);
 
-                printf("Insert phone number: ");
-                char* phone_number = scanInput();
-                insertPhoneNumber(contact, phone_number);
+                printf("Insert amount of phone numbers: ");
+                char* input = calloc(1 ,sizeof(char));
+                char symbol;
+                int counter = 0;
+                printf("Input command: ");
+
+                while(scanf("%c", &symbol) == 1 && symbol != '\n'){
+                    
+                    if(isdigit(symbol) == 0) {
+                        printf("Incorrect amount of phone numbers\n");
+                        continue;
+                    }
+                    input[counter] = symbol;
+                    counter++;
+                    input = realloc(input, sizeof(char) * (counter+1));
+
+                } 
+                int num = atoi(input);
+                for(int i = 0; i < num; i++) {
+
+                    printf("Insert phone number %d: ", i);
+                    char* phone_number = scanInput();
+                    insertPhoneNumber(contact, phone_number, i);
+
+                }
+
 
                 printf("Insert Position: ");
                 char* position = scanInput();

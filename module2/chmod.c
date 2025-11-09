@@ -19,6 +19,7 @@ void printMask(mode_t mask){
 
 }
 
+ 
 void printBitMask(mode_t mask){
 
     printf((mask & S_IRUSR) ? "1" : "0");
@@ -74,6 +75,11 @@ mode_t makeMask(char* owner, char* mode){
                 owner_mask = owner_mask | S_IRWXO;
                 break;
 
+            case 'a':
+
+                owner_mask = owner_mask | S_IRWXO | S_IRWXG | S_IRWXU;
+                break;
+
             default:
                 break;
         }
@@ -116,6 +122,24 @@ mode_t makeMask(char* owner, char* mode){
 }
 
 
+mode_t makeMaskFromCommand(char* command) {
+
+    int i;
+    for(i = 0; command[i] !='\0'; i++){};
+    mode_t res;
+
+    if((command[0] == '0' && i == 4) || i == 3) {
+        res =(mode_t) strtol(command, NULL, 8) & 0777;
+    }
+    else {
+        res = (mode_t) -1;
+    }
+
+    return res;
+
+}
+
+
 mode_t operProc(char oper, mode_t mask, mode_t file_mask){
 
     switch (oper) {
@@ -134,7 +158,8 @@ mode_t operProc(char oper, mode_t mask, mode_t file_mask){
         return mask;
     
     default:
-        break;
+        
+        return mask;
     }
 
     return file_mask;
@@ -142,47 +167,72 @@ mode_t operProc(char oper, mode_t mask, mode_t file_mask){
 }
 
 
-int inputParsing(char* input, int counter, char* owner, char* oper, char* mode, char* filename){
+int inputParsing(char* input, int counter, char* command, char* owner, char* oper, char* mode, char* filename){
 
     int i = 0;
-    while(input[i] != '+' && input[i] != '-' && input[i] != '=') {
+    if(isdigit(input[0])){
 
-        if(input[i] == 'u' || input[i] == 'g' || input[i] == 'o'){
-            owner[i] = input[i];
-            i++;
-            owner = realloc(owner, sizeof(char)*(i+1));
-        }
-        else {
-            return 1;
+        while(input[i] != ' ') {
+
+            if(isdigit(input[i])) {
+                command[i] = input[i];
+                i++;
+                command = realloc(command, sizeof(char)* (i+1));
+            }
+            else {
+                return 1;
+            }
+
         }
         
-    }
-    
-    owner[i+1] = '\0';
-
-    if(input[i] == '+' || input[i] == '-' || input[i] == '=') {
-        oper[0] = input[i];
-        i++;
+        if(i != 3 && i != 4) {
+            return 1;
+        }
+        command[i] = '\0';
     }
     else {
-        return 1;
-    }
-
     
-    for(int j = 0; input[i] != ' '; j++) {
+        while(input[i] != '+' && input[i] != '-' && input[i] != '=') {
 
-        if(input[i] == 'r' || input[i] == 'w' || input[i] == 'x') {
-            mode[j] = input[i];
+            if(input[i] == 'u' || input[i] == 'g' || input[i] == 'o' || input[i] == 'a'){
+                owner[i] = input[i];
+                i++;
+                owner = realloc(owner, sizeof(char)*(i+1));
+            }
+            else {
+                return 1;
+            }
+            
+        }
+        
+        owner[i+1] = '\0';
+
+        if(input[i] == '+' || input[i] == '-' || input[i] == '=') {
+            oper[0] = input[i];
             i++;
-            mode = realloc(mode, sizeof(char)*(j+1));
         }
         else {
             return 1;
         }
 
+        
+        for(int j = 0; input[i] != ' '; j++) {
+
+            if(input[i] == 'r' || input[i] == 'w' || input[i] == 'x') {
+                mode[j] = input[i];
+                i++;
+                mode = realloc(mode, sizeof(char)*(j+1));
+            }
+            else {
+                return 1;
+            }
+
+        }
+
+        mode[i+1] = '\0';
+
     }
 
-    mode[i+1] = '\0';
     i++;
     counter -= i;
     int filename_lenth = 0;
@@ -215,31 +265,52 @@ int main(){
             counter++;
             input = realloc(input, sizeof(char) * (counter+1));
 
-        }
+        }   
 
+        char* command = calloc(1, sizeof(char));
         char* owner = calloc(1, sizeof(char));
         char oper = ' ';
         char* mode = calloc(1, sizeof(char));
         char* filename = calloc(1, sizeof(char));
 
-        int error = inputParsing(input, counter, owner, &oper, mode, filename);
+        int error = inputParsing(input, counter, command, owner, &oper, mode, filename);
         if(error == 1) {
             printf("Incorrect input\n");
             continue;
         }
 
+        mode_t mask;
+        if(isdigit(command[0])) {
+            mask = makeMaskFromCommand(command);
+            if (mask == (mode_t) -1) {
+                printf("Incorrect input\n");
+                continue;
+            }
+        }
+        else {
+            mask = makeMask(owner, mode);
+        }
+
+        printMask(mask);
+
         mode_t file_mask = checkFile(filename);
         if(file_mask == (mode_t)-1) {
             printf("No such file in directory\n");
+            continue;
         }
         printf("filemask of %s: ", filename);
         printMask(file_mask);
 
-        mode_t mask = makeMask(owner, mode);
+        
         mode_t new_mask = operProc(oper, mask, file_mask);
         printf("New mask: %03o\n", new_mask);
         printMask(new_mask);
         printBitMask(new_mask);
+
+        free(command);
+        free(owner);
+        free(mode);
+        free(input);
         
     }
 
