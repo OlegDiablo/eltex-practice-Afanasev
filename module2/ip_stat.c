@@ -162,7 +162,7 @@ int main(){
         uint32_t binary_mask = binaryMask(mask);
 
         uint32_t subnet = defNet(test_ip, binary_mask); 
-        printf("Result: %f\n", statistics(subnet, binary_mask, amount)); 
+        printf("Result: %.1f\n", statistics(subnet, binary_mask, amount)); 
     
     }
 

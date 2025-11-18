@@ -70,6 +70,7 @@ int queuePop(Queue* queue){
 
 int queuePopByPriority(Queue* queue, int del_priority) {
 
+    int data = -2;
     if(queue->head == NULL) {
         return -1;
     }
@@ -82,6 +83,7 @@ int queuePopByPriority(Queue* queue, int del_priority) {
             if(cur->priority == del_priority) {
                 if(prev == NULL) {
                     printf("Deleted %d with priority %d\n", cur->data, cur->priority);
+                    data = cur->data;
                     queue->head = cur->next;
                     cur = queue->head;
                     if(queue->head == NULL) {
@@ -90,6 +92,7 @@ int queuePopByPriority(Queue* queue, int del_priority) {
                 }
                 else {
                     printf("Deleted %d with priority %d\n", cur->data, cur->priority);
+                    data = cur->data;
                     prev->next = cur->next;
                     cur = cur->next;
                     if(prev->next == NULL) {
@@ -106,26 +109,44 @@ int queuePopByPriority(Queue* queue, int del_priority) {
         }
     }
 
-    return 0;
+    return data;
 }
 
 int queuePopAbovePriority(Queue* queue, int del_priority){
 
+    int data = -2;
     if(queue->head == NULL) {
         return -1;
     }
     else {
         Node* cur = queue->head;
-        while(cur->next != NULL && cur->next->priority <= del_priority) {
 
-            printf("Deleting %d with priority %d\n", cur->data, cur->priority);
+        if(cur->priority >= del_priority) {
+            data = cur->data;
             cur = cur->next;
             queue->head = cur;
-        
+        }
+        else {
+            while(cur->next != NULL && cur->next->priority < del_priority) {
+                cur = cur->next;       
+            }
+
+            printf("Deleted %d with priority %d\n", cur->next->data, cur->next->priority);
+            data = cur->next->data;
+            cur->next = cur->next->next; 
+            if(cur->next == NULL) {
+                queue->tail = cur;
+            }
+            if(cur == queue->head && cur->priority >= del_priority && cur == queue->tail) {
+                data = cur->next->data;
+                cur = cur->next;
+                queue->head = cur;
+                queue->tail = cur;
+            }
         }
     }
 
-    return 0;
+    return data;
 }
 
 
@@ -161,7 +182,6 @@ int main(){
         int data = rand();
         int priority = rand() % 256;
         queuePush(queue, priority, data);
-        queuePrint(queue);
         del_priority[i] = priority;
 
     }
@@ -174,15 +194,29 @@ int main(){
     }
     queuePrint(queue);
 
-    printf("Deleting elements with priority %d\n", del_priority[rand()%7]);
-    if(queuePopByPriority(queue, del_priority[rand()%7]) == -1) {
+    int i = rand()%6;
+    printf("Deleting element with priority %d\n", del_priority[i]);
+    int data = queuePopByPriority(queue, del_priority[i]);
+    if(data == -1) {
         printf("Queue is empty\n");
+    }
+    else if(data == -2) {
+        printf("No value with priority %d\n", i);
+    }
+    else {
+        printf("Deleted value: %d\n", data);
     }
     queuePrint(queue);
 
-    printf("Deleting elements with priority above %d\n", del_priority[rand()%7]);
-    if(queuePopAbovePriority(queue, del_priority[rand()%7]) == -1) {
+    int j = rand()%6;
+    printf("Deleting elements with priority above %d\n", del_priority[j]);
+
+    data = queuePopAbovePriority(queue, del_priority[j]);
+    if(data == -1) {
         printf("Queue is empty\n");
+    }
+    else {
+        printf("Deleted value: %d\n", data);
     }
     queuePrint(queue);
 

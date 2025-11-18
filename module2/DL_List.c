@@ -10,7 +10,7 @@ Dlist* initDList(){
 
 }
 
-Node* initNode(Contact value){
+Node* initNode(Contact* value){
 
     Node* node = malloc(sizeof(Node));
     node->data = value;
@@ -21,27 +21,109 @@ Node* initNode(Contact value){
 
 }
 
-void dListPush(Dlist* list, Contact value){
+
+int checkPriority(char value){
+
+    if((value >= 'a' && value <= 'z') || (value >= 'A' && value <= 'Z')) {
+        return value - 'a' + 1;
+    }
+    if(value == 32 || value == 0) {return 0;}
+
+    return -1;
+}
+
+
+int dListPush(Dlist* list, Contact* value){
 
     Node* node = initNode(value);
 
+    if(value->surname[0] == 32 || checkPriority(value->surname[0]) == -1) {
+        return 1;
+    }
+
     if(list->head == NULL) {
         list->head = node; 
-        list->tail = node; 
+        list->tail = node;
+        return 0; 
     }
     else {
-        node->index = list->tail->index + 1;
-        node->prev = list->tail;
-        list->tail->next = node;
-        list->tail = node;
+
+        Node* tmp = list->head; 
+        int ind = -1;
+        while(tmp != NULL) {
+            for(int i = 0; i < (int)strlen(value->surname); i++) {
+
+                if(checkPriority(value->surname[i]) == -2) {
+                    return 1;
+                }
+
+                if(checkPriority(value->surname[i]) >= checkPriority(tmp->data->surname[i])) {
+                    break;
+                }
+                if(checkPriority(value->surname[i]) < checkPriority(tmp->data->surname[i]) 
+                || (checkPriority(value->surname[i]) == 0 && checkPriority(tmp->data->surname[i]) != 0)) {
+                    ind = tmp->index;
+                    break;
+                }
+
+            }
+            tmp = tmp->next;   
+
+        }
+        
+        tmp = list->head;
+        while(1) {
+            if(ind == -1) {
+                node->index = list->tail->index + 1;
+                node->next = list->tail->next;
+                node->prev = list->tail;
+                list->tail->next = node;
+                list->tail = node;
+                break;               
+            }
+            else if(tmp->index == ind) {
+                if(list->head == tmp) {
+                    list->head = node;
+                }
+                else {
+                    node->prev = tmp->prev;
+                    tmp->prev->next = node;
+                }
+                node->index = tmp->index;
+                node->next = tmp;
+                tmp->prev = node;
+
+
+                for(int j = ind + 1; tmp != NULL; j++) {
+
+                    tmp->index = j;
+                    tmp = tmp->next;
+
+                }
+                break;
+            }
+            else {
+                tmp = tmp->next;     
+            }
+        }
+        return 0;
+        
     }
 
 }
 
-int dListPop(Dlist* list, int ind){
-
+Contact* dListPop(Dlist* list, int ind){
     if (list->head == NULL) {
-        return 1;
+        return NULL;
+    }
+    Contact *res;
+
+    if (list->head == list->tail) {
+        
+        res = list->head->data;
+        list->head = NULL;
+        list->head = NULL;
+        return res;
     }
 
     Node* tmp = list->head;
@@ -49,11 +131,7 @@ int dListPop(Dlist* list, int ind){
         tmp = tmp->next;
     }
 
-    if(tmp == NULL || tmp->next == NULL) {
-        return 2;
-    }
-
-    printf("Deleted %d with index %d\n", tmp->next->data, tmp->next->index);
+    res = tmp->next->data;
     tmp->next = tmp->next->next;
     if(tmp->next != NULL) {
         tmp->next->prev = tmp;
@@ -65,38 +143,25 @@ int dListPop(Dlist* list, int ind){
         current = current->next;
     }
 
-    return 0;
+    return res;
 }
 
 
 void dListPrint(Dlist* list){
 
     Node* tmp = list->head;
+
     if(tmp == NULL) {
         printf("List is empty\n");
     }
     else {
-        printf("value | index\n");
         while (tmp != NULL) {
 
-            printf("%d | %d\n", tmp->data, tmp->index);
+            printf("\nContact %d\n", tmp->index + 1);
+            printContact(tmp->data);
             tmp = tmp->next;
         
         }
     }
-
-}
-
-
-int main(){
-
-    Dlist* list = initDList();
-    /*for(int i = 0; i < 6; i++) {
-        int data = rand();
-        dListPush(list, data);
-    }*/
-    dListPrint(list);
-    dListPop(list, 3);
-    dListPrint(list);
 
 }
