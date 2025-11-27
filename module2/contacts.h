@@ -1,22 +1,27 @@
-#ifndef contacts_h
-#define contacts_h 
+#pragma once
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-typedef struct {
+typedef struct Contact{
 
-    unsigned int id;
-    char* name;
-    char* surname;
-    char* patronymic;
-    char* phone_number;
-    char* position;
+    char name[20];
+    char surname[20];
+    char patronymic[20];
+    char** phone_number;
+    int num_counter;
+    char position[30];
 
 }Contact;
 
+
+Contact* initContact(char* name, char* surname, char* patronymic, char* postition);
 void insertName(Contact*, char*);
 void insertSurname(Contact*, char*);
 void insertPatronymic(Contact*, char*);
-void insertPhoneNumber(Contact*, char*);
+void insertPhoneNumber(Contact*, char*, int);
 void insertPosition(Contact*, char*);
 char* scanInput();
-
-#endif
+char* scanChangeInput();
+void printString(char* data);
+void printContact(Contact*);
