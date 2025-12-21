@@ -8,8 +8,18 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
+<<<<<<< HEAD
       "cwd": "d:/VSCode/eltex-practice-Afanasev/module2/2/2.2",
       "program": "d:/VSCode/eltex-practice-Afanasev/module2/2/2.2/build/Debug/outDebug",
+=======
+<<<<<<< HEAD
+      "cwd": "c:/Users/afane/Desktop/ДЗ/СПЛ/eltex-practice-Afanasev/module5/task1",
+      "program": "c:/Users/afane/Desktop/ДЗ/СПЛ/eltex-practice-Afanasev/module5/task1/build/Debug/outDebug",
+=======
+      "cwd": "c:/practice/eltex-practice-Afanasev/module2",
+      "program": "c:/practice/eltex-practice-Afanasev/module2/build/Debug/outDebug",
+>>>>>>> main
+>>>>>>> 9ea5fbde11dbcba6130b1a4a620dc4644d1fd399
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
