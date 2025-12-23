@@ -28,21 +28,6 @@ static int test;// cod
 #define ALL_LEDS_ON   0x07
 #define RESTORE_LEDS  0xFF
 static struct kobject *example_kobject;
-/*
- * Function my_timer_func blinks the keyboard LEDs periodically by invoking
- * command KDSETLED of ioctl() on the keyboard driver. To learn more on virtual
- * terminal ioctl operations, please see file:
- *     /usr/src/linux/drivers/char/vt_ioctl.c, function vt_ioctl().
- *
- * The argument to KDSETLED is alternatively set to 7 (thus causing the led
- * mode to be set to LED_SHOW_IOCTL, and all the leds are lit) and to 0xFF
- * (any value above 7 switches back the led mode to LED_SHOW_FLAGS, thus
- * the LEDs reflect the actual keyboard status). To learn more on this,
- * please see file:
- *     /usr/src/linux/drivers/char/keyboard.c, function setledstate().
- *
- */
-//static void my_timer_func(unsigned long ptr)
 
 static ssize_t foo_show(struct kobject *kobj, struct kobj_attribute *attr,
                       char *buf)
