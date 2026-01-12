@@ -16,7 +16,7 @@ typedef struct Dlist{
 }Dlist;
 
 Dlist* initDList();
-Node* initNode();
+Node* initNode(Contact* value);
 int dListPush(Dlist* list, Contact* value);
 Contact* dListPop(Dlist* list, int ind);
 void dListPrint(Dlist* list);

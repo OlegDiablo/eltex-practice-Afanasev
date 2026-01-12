@@ -19,4 +19,4 @@ contacts.o: contacts.c contacts.h
 	$(CC) $(CFLAGS) contacts.c -o contacts.o
 
 clean:
-	rm -f *.o *.a *.exe contacts_book
+	rm -r *.o *.a *.exe contacts_book 2>null
