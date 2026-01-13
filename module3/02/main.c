@@ -26,7 +26,7 @@ void execute_command(char *args[]) {
     pid_t pid = fork();
     
     if (pid == -1) {
-        perror("Ошибка при создании процесса");
+        perror("Process creating error");
         return;
     }
     
@@ -36,9 +36,9 @@ void execute_command(char *args[]) {
         
 
         if (errno == ENOENT) {
-            printf("Команда не найдена: %s\n", args[0]);
+            printf("Command not found: %s\n", args[0]);
         } else {
-            perror("Ошибка выполнения");
+            perror("Runtime error");
         }
         exit(1);
     } else {
@@ -52,8 +52,8 @@ int main() {
     char input[MAX_INPUT_LENGTH];
     char *args[MAX_ARGS];
     
-    printf("=== Простой командный интерпретатор ===\n");
-    printf("Введите 'exit' для выхода\n\n");
+    printf("Command interpreter\n");
+    printf("Type 'exit' to terminate program\n\n");
     
     while (1) {
 
@@ -62,12 +62,12 @@ int main() {
         
 
         if (fgets(input, MAX_INPUT_LENGTH, stdin) == NULL) {
-            printf("\nДо свидания!\n");
+            printf("\nGoodbye!\n");
             break;
         }
 
         if (strncmp(input, "exit", 4) == 0) {
-            printf("До свидания!\n");
+            printf("Goodbye!\n");
             break;
         }
         

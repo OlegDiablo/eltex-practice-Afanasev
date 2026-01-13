@@ -5,7 +5,8 @@
 #include <string.h>
 #include <time.h>
 
-#define OUTPUT_FILE "counter.txt"
+#define OUTPUT_FILE "counter.log"
+#define _XOPEN_SOURCE 700
 
 FILE *file = NULL;
 volatile sig_atomic_t counter = 0;
@@ -14,28 +15,25 @@ volatile sig_atomic_t should_exit = 0;
 
 // Функция-обработчик сигналов
 void signal_handler(int sig) {
-    time_t now = time(NULL);
-    char *timestamp = ctime(&now);
-    timestamp[strlen(timestamp) - 1] = '\0'; // Убираем перевод строки
     
     if (file != NULL) {
         if (sig == SIGINT) {
-            fprintf(file, "[%s] Получен и обработан сигнал SIGINT (%d/3)\n", 
-                    timestamp, sigint_count + 1);
+            fprintf(file, "Получен и обработан сигнал SIGINT (%d/3)\n", 
+                     sigint_count + 1);
             fflush(file);
             sigint_count++;
             if (sigint_count >= 3) {
                 should_exit = 1;
             }
         } else if (sig == SIGQUIT) {
-            fprintf(file, "[%s] Получен и обработан сигнал SIGQUIT\n", timestamp);
+            fprintf(file, "Получен и обработан сигнал SIGQUIT\n");
             fflush(file);
         }
     }
 }
 
 int main() {
-    struct sigaction act;
+    struct sigaction sa;
     
     // Настройка обработчика сигналов
     sa.sa_handler = signal_handler;
